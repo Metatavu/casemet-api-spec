@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   version: 1.0.0
-  title: Casemet API-spec
+  title: Casemet API spec
 
 security:
   - bearerAuth: []
@@ -21,3 +21,699 @@ paths:
             text/plain:
               schema:
                 type: string
+
+  /v1/customers:
+    get:
+      summary:  Lists customers
+      description: Lists customers
+      tags:
+        - Customers
+      operationId: listCustomers
+      responses:
+        "200":
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/customers/{customerId}:
+    get:
+      summary:  Finds a customer
+      description: Finds customer details by customer id
+      tags:
+        - Customer
+      operationId: findCustomer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: User id
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Found customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/orders:
+    get:
+      summary:  Lists orders
+      description: Lists orders
+      tags:
+        - Orders
+      operationId: listOrders
+      parameters:
+        - name: deliveryBefore
+          in: query
+          required: false
+          description: Filter results by delivery date
+          schema:
+            type: string
+            format: date
+        - name: deliveryAfter
+          in: query
+          required: false
+          description: Filter results by delivery date
+          schema:
+            type: string
+            format: date
+        - name: customerClassification
+          in: query
+          required: false
+          description: Filter results by customer classification
+          schema:
+            type: string
+            enum: [A, B, C]
+        - name: hasRiskOnly
+          in: query
+          required: false
+          description: Show only orders with risk
+          schema:
+            type: boolean
+        - name: sortBy
+          in: query
+          required: false
+          description: Sort results by
+          schema:
+            type: string
+            enum: [ DAYS_LATE, DELIVERY_DATE ]
+      responses:
+        "200":
+          description: List of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/orders/{orderId}:
+    get:
+      summary:  Finds a order
+      description: Finds order details by order id
+      tags:
+        - Order
+      operationId: findOrder
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          description: User id
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Found order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/products:
+    get:
+      summary:  Lists products
+      description: Lists products
+      tags:
+        - Products
+      operationId: listProducts
+      parameters:
+        - name: parentId
+          in: query
+          required: false
+          description: Filter results parent product id
+          schema:
+            type: string
+        - name: orderId
+          in: query
+          required: false
+          description: Filter results by order id
+          schema:
+            type: string
+            format: uuid
+        - name: hasRiskOnly
+          in: query
+          required: false
+          description: Show only products with risk
+          schema:
+            type: boolean
+        - name: sortBy
+          in: query
+          required: false
+          description: Sort results by
+          schema:
+            type: string
+            enum: [ DAYS_LATE, NAME ]
+      responses:
+        "200":
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/products/{productId}:
+    get:
+      summary:  Finds a product
+      description: Finds product details by product id
+      tags:
+        - Product
+      operationId: findProduct
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: User id
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Found product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/workitems:
+    get:
+      summary:  Lists workitems
+      description: Lists workitems
+      tags:
+        - WorkItems
+      operationId: listWorkItems
+      parameters:
+        - name: productId
+          in: query
+          required: false
+          description: Filter results product id
+          schema:
+            type: string
+            format: uuid
+        - name: orderId
+          in: query
+          required: false
+          description: Filter results by order id
+          schema:
+            type: string
+            format: uuid
+        - name: hasRiskOnly
+          in: query
+          required: false
+          description: Show only work items with risk
+          schema:
+            type: boolean
+        - name: incompleteOnly
+          in: query
+          required: false
+          description: Show only in-completed work items
+          schema:
+            type: boolean
+        - name: sortBy
+          in: query
+          required: false
+          description: Sort results by
+          schema:
+            type: string
+            enum: [ DAYS_LATE, NAME ]
+      responses:
+        "200":
+          description: List of workitems
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkItem'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/workitems/{workitemId}:
+    get:
+      summary:  Finds a workitem
+      description: Finds workitem details by workitem id
+      tags:
+        - WorkItem
+      operationId: findWorkItem
+      parameters:
+        - name: workitemId
+          in: path
+          required: true
+          description: User id
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Found workitem
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/materials:
+    get:
+      summary:  Lists materials
+      description: Lists materials
+      tags:
+        - Materials
+      operationId: listMaterials
+      parameters:
+        - name: productId
+          in: query
+          required: false
+          description: Filter results product id
+          schema:
+            type: string
+            format: uuid
+        - name: hasRiskOnly
+          in: query
+          required: false
+          description: Show only materials with risk
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of materials
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Material'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/materials/{materialId}:
+    get:
+      summary:  Finds a material
+      description: Finds material details by material id
+      tags:
+        - Material
+      operationId: findMaterial
+      parameters:
+        - name: materialId
+          in: path
+          required: true
+          description: User id
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Found material
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Material'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Error:
+      type: object
+      description: Error object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+    Customer:
+      type: object
+      description: Customer object
+      properties:
+        id:
+          type: string
+          format: uuid
+        lemonId:
+          type: string
+        name:
+          type: string
+        classification:
+          type: string
+          enum: [A, B, C]
+
+    Order:
+      type: object
+      description: Order object
+      properties:
+        id:
+          type: string
+          format: uuid
+        lemonId:
+          type: string
+        customerId:
+          type: string
+          format: uuid
+        code:
+          type: string
+        deliveryDate:
+          type: string
+          format: date
+        hasRisk:
+          type: boolean
+        daysLate:
+          type: integer
+          format: int32
+
+    Product:
+      type: object
+      description: Product object
+      properties:
+        id:
+          type: string
+          format: uuid
+        parentId:
+          type: string
+          format: uuid
+        orderId:
+          type: string
+          format: uuid
+        lemonId:
+          type: string
+        code:
+          type: string
+        name:
+          type: string
+        amount:
+          type: integer
+          format: int32
+        readyAmount:
+          type: integer
+          format: int32
+        hasRisk:
+          type: boolean
+        daysLate:
+          type: integer
+          format: int32
+
+    WorkItem:
+      type: object
+      description: WorkItem object
+      properties:
+        id:
+          type: string
+          format: uuid
+        productId:
+          type: string
+          format: uuid
+        lemonId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        amount:
+          type: integer
+          format: int32
+        readyAmount:
+          type: integer
+          format: int32
+        hasRisk:
+          type: boolean
+        daysLate:
+          type: integer
+          format: int32
+
+    Material:
+      type: object
+      description: Material object
+      properties:
+        id:
+          type: string
+          format: uuid
+        lemonId:
+          type: string
+        name:
+          type: string
+        productId:
+          type: string
+          format: uuid
+        unit:
+          type: string
+        storageAmount:
+          type: number
+          format: double
+        requiredAmount:
+          type: number
+          format: double
+        hasRisk:
+          type: boolean
