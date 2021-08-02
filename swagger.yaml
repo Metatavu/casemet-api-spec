@@ -121,17 +121,17 @@ paths:
         - name: deliveryBefore
           in: query
           required: false
-          description: Filter results by delivery date
+          description: Filter results by delivery time
           schema:
             type: string
-            format: date
+            format: date-time
         - name: deliveryAfter
           in: query
           required: false
-          description: Filter results by delivery date
+          description: Filter results by delivery time
           schema:
             type: string
-            format: date
+            format: date-time
         - name: customerClassification
           in: query
           required: false
