@@ -68,7 +68,7 @@ paths:
       summary:  Finds a customer
       description: Finds customer details by customer id
       tags:
-        - Customer
+        - Customers
       operationId: findCustomer
       parameters:
         - name: customerId
@@ -191,7 +191,7 @@ paths:
       summary:  Finds a order
       description: Finds order details by order id
       tags:
-        - Order
+        - Orders
       operationId: findOrder
       parameters:
         - name: orderId
@@ -306,7 +306,7 @@ paths:
       summary:  Finds a product
       description: Finds product details by product id
       tags:
-        - Product
+        - Products
       operationId: findProduct
       parameters:
         - name: productId
@@ -428,7 +428,7 @@ paths:
       summary:  Finds a workitem
       description: Finds workitem details by workitem id
       tags:
-        - WorkItem
+        - WorkItems
       operationId: findWorkItem
       parameters:
         - name: workitemId
@@ -530,7 +530,7 @@ paths:
       summary:  Finds a material
       description: Finds material details by material id
       tags:
-        - Material
+        - Materials
       operationId: findMaterial
       parameters:
         - name: materialId
