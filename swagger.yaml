@@ -68,7 +68,7 @@ paths:
       summary:  Finds a customer
       description: Finds customer details by customer id
       tags:
-        - Customer
+        - Customers
       operationId: findCustomer
       parameters:
         - name: customerId
