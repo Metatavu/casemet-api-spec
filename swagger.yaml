@@ -797,8 +797,12 @@ components:
         - startdate
         - endDate
         - hasRisk
+        - orderId
       properties:
         id:
+          type: string
+          format: uuid
+        orderId:
           type: string
           format: uuid
         productId:
