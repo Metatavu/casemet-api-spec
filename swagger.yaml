@@ -572,6 +572,114 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /v1/orderRows:
+    get:
+      summary: Lists order rows
+      description: Lists order rows
+      tags:
+        - OrderRows
+      operationId: listOrderRows
+      parameters:
+        - name: orderId
+          in: query
+          required: false
+          description: Filter results by order id
+          schema:
+            type: string
+            format: uuid
+        - name: productId
+          in: query
+          required: false
+          description: Filter results by product id
+          schema:
+            type: string
+            format: uuid
+        - name: hasRiskOnly
+          in: query
+          required: false
+          description: Show only materials with risk
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of sales order rows
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Material'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/orderRows/{orderRowId}:
+    get:
+      summary: Finds order row
+      description: Finds order row by order row id
+      tags:
+        - OrderRows
+      operationId: findOrderRow
+      parameters:
+        - name: orderRowId
+          in: path
+          required: true
+          description: order row id
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Found order row
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderRow'
+        "400":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   securitySchemes:
     bearerAuth:
@@ -713,6 +821,36 @@ components:
           type: number
           format: double
         requiredAmount:
+          type: number
+          format: double
+        hasRisk:
+          type: boolean
+
+    OrderRow:
+      type: object
+      description: order row object
+      properties:
+        id:
+          type: string
+          format: uuid
+        orderId:
+          type: string
+          format: uuid
+        productId:
+          type: string
+          format: uuid
+        lemonId:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        requiredAmount:
+          type: number
+          format: double
+        deliveredAmount:
           type: number
           format: double
         hasRisk:
