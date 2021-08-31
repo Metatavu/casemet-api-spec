@@ -608,7 +608,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Material'
+                  $ref: '#/components/schemas/OrderRow'
         "400":
           description: Invalid request was sent to the server
           content:
@@ -701,6 +701,11 @@ components:
     Customer:
       type: object
       description: Customer object
+      required:
+        - id
+        - lemonId
+        - name
+        - classification
       properties:
         id:
           type: string
@@ -716,6 +721,13 @@ components:
     Order:
       type: object
       description: Order object
+      required:
+        - id
+        - lemonId
+        - customerId
+        - code
+        - deliveryDate
+        - hasRisk
       properties:
         id:
           type: string
@@ -739,6 +751,13 @@ components:
     Product:
       type: object
       description: Product object
+      required:
+        - id
+        - orderId
+        - lemonId
+        - code
+        - name
+        - hasRisk
       properties:
         id:
           type: string
@@ -770,6 +789,14 @@ components:
     WorkItem:
       type: object
       description: WorkItem object
+      required:
+        - id
+        - productId
+        - lemonId
+        - name
+        - startdate
+        - endDate
+        - hasRisk
       properties:
         id:
           type: string
@@ -804,6 +831,15 @@ components:
     Material:
       type: object
       description: Material object
+      required:
+        - id
+        - lemonId
+        - name
+        - productId
+        - unit
+        - storageAmount
+        - requiredAmount
+        - hasRisk
       properties:
         id:
           type: string
@@ -829,6 +865,14 @@ components:
     OrderRow:
       type: object
       description: order row object
+      required:
+        - id
+        - orderId
+        - prodictId
+        - lemonId
+        - startDate
+        - endDate
+        - hasRisk
       properties:
         id:
           type: string
