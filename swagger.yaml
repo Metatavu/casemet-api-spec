@@ -247,6 +247,7 @@ paths:
           description: Filter results parent product id
           schema:
             type: string
+            format: uuid
         - name: orderId
           in: query
           required: false
@@ -356,6 +357,13 @@ paths:
         - WorkItems
       operationId: listWorkItems
       parameters:
+        - name: parentId
+          in: query
+          required: false
+          description: Filter results by parent workitem id
+          schema:
+            type: string
+            format: uuid
         - name: productId
           in: query
           required: false
@@ -831,6 +839,9 @@ components:
         daysLate:
           type: integer
           format: int32
+        parentId:
+          type: string
+          format: uuid
 
     Material:
       type: object
