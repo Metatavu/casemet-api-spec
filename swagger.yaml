@@ -799,7 +799,6 @@ components:
       description: WorkItem object
       required:
         - id
-        - productId
         - lemonId
         - name
         - startdate
