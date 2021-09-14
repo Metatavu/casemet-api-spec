@@ -731,6 +731,7 @@ components:
       description: Order object
       required:
         - id
+        - externalId
         - lemonId
         - customerId
         - code
@@ -740,6 +741,8 @@ components:
         id:
           type: string
           format: uuid
+        externalId:
+          type: string
         lemonId:
           type: string
         customerId:
