@@ -742,7 +742,7 @@ components:
           type: string
           format: uuid
         externalId:
-          type: string
+          type: integer
         lemonId:
           type: string
         customerId:
